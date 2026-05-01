@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <radialGradient id="base" cx="40%" cy="35%" r="70%">
+      <stop offset="0%"   stop-color="#f0eeff"/>
+      <stop offset="100%" stop-color="#e8f4ff"/>
+    </radialGradient>
+    <radialGradient id="orb1" cx="18%" cy="22%" r="48%">
+      <stop offset="0%"   stop-color="#c4b5fd" stop-opacity="0.55"/>
+      <stop offset="60%"  stop-color="#ddd6fe" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#f0eeff"  stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orb2" cx="85%" cy="80%" r="42%">
+      <stop offset="0%"   stop-color="#93c5fd" stop-opacity="0.5"/>
+      <stop offset="60%"  stop-color="#bfdbfe" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#e8f4ff"  stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orb3" cx="80%" cy="10%" r="28%">
+      <stop offset="0%"   stop-color="#f9a8d4" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#fce7f3"  stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orb4" cx="6%" cy="90%" r="26%">
+      <stop offset="0%"   stop-color="#6ee7b7" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#d1fae5"  stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
+      <stop offset="0%"   stop-color="#e0d9ff" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#c7d8f5"  stop-opacity="0.35"/>
+    </radialGradient>
+    <pattern id="dots" x="0" y="0" width="36" height="36" patternUnits="userSpaceOnUse">
+      <circle cx="18" cy="18" r="1.2" fill="#7c3aed" fill-opacity="0.08"/>
+    </pattern>
+    <filter id="blur-big"><feGaussianBlur stdDeviation="90"/></filter>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#base)"/>
+
+  <ellipse cx="350"  cy="240"  rx="480" ry="400" fill="#a78bfa" fill-opacity="0.22" filter="url(#blur-big)"/>
+  <ellipse cx="1620" cy="840"  rx="440" ry="370" fill="#60a5fa" fill-opacity="0.2"  filter="url(#blur-big)"/>
+  <ellipse cx="1530" cy="110"  rx="300" ry="250" fill="#f472b6" fill-opacity="0.18" filter="url(#blur-big)"/>
+  <ellipse cx="130"  cy="960"  rx="280" ry="230" fill="#34d399" fill-opacity="0.18" filter="url(#blur-big)"/>
+  <ellipse cx="960"  cy="540"  rx="360" ry="300" fill="#c084fc" fill-opacity="0.08" filter="url(#blur-big)"/>
+
+  <rect width="1920" height="1080" fill="url(#orb1)"/>
+  <rect width="1920" height="1080" fill="url(#orb2)"/>
+  <rect width="1920" height="1080" fill="url(#orb3)"/>
+  <rect width="1920" height="1080" fill="url(#orb4)"/>
+  <rect width="1920" height="1080" fill="url(#dots)"/>
+
+  <g filter="url(#glow)" opacity="0.6">
+    <circle cx="350" cy="240" r="210" fill="none" stroke="#8b5cf6" stroke-width="1"   stroke-opacity="0.25"/>
+    <circle cx="350" cy="240" r="340" fill="none" stroke="#8b5cf6" stroke-width="0.8" stroke-opacity="0.12"/>
+    <circle cx="1620" cy="840" r="200" fill="none" stroke="#3b82f6" stroke-width="1"   stroke-opacity="0.22"/>
+    <circle cx="1620" cy="840" r="320" fill="none" stroke="#3b82f6" stroke-width="0.7" stroke-opacity="0.1"/>
+    <circle cx="1530" cy="110" r="130" fill="none" stroke="#ec4899" stroke-width="1"   stroke-opacity="0.22"/>
+    <line x1="0"    y1="500"  x2="680"  y2="0"    stroke="#8b5cf6" stroke-width="1"   stroke-opacity="0.12"/>
+    <line x1="1920" y1="380"  x2="1100" y2="1080" stroke="#3b82f6" stroke-width="1"   stroke-opacity="0.12"/>
+    <path d="M0,150 L0,0 L150,0"                fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-opacity="0.35"/>
+    <path d="M1920,150 L1920,0 L1770,0"         fill="none" stroke="#ec4899" stroke-width="2" stroke-linecap="round" stroke-opacity="0.35"/>
+    <path d="M0,930 L0,1080 L150,1080"          fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-opacity="0.35"/>
+    <path d="M1920,930 L1920,1080 L1770,1080"   fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-opacity="0.35"/>
+    <polygon points="0,0 260,0 0,200"               fill="none" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.14"/>
+    <polygon points="1920,1080 1660,1080 1920,880"  fill="none" stroke="#3b82f6" stroke-width="1" stroke-opacity="0.14"/>
+  </g>
+
+  <g filter="url(#glow)">
+    <circle cx="120"  cy="150"  r="3"   fill="#8b5cf6" fill-opacity="0.6"/>
+    <circle cx="230"  cy="100"  r="2"   fill="#7c3aed" fill-opacity="0.55"/>
+    <circle cx="500"  cy="70"   r="2.5" fill="#a78bfa" fill-opacity="0.55"/>
+    <circle cx="65"   cy="400"  r="2"   fill="#8b5cf6" fill-opacity="0.5"/>
+    <circle cx="1770" cy="710"  r="3"   fill="#60a5fa" fill-opacity="0.6"/>
+    <circle cx="1855" cy="810"  r="2"   fill="#3b82f6" fill-opacity="0.55"/>
+    <circle cx="1630" cy="970"  r="2.5" fill="#93c5fd" fill-opacity="0.5"/>
+    <circle cx="1590" cy="55"   r="3"   fill="#f472b6" fill-opacity="0.55"/>
+    <circle cx="1730" cy="115"  r="2"   fill="#ec4899" fill-opacity="0.5"/>
+    <circle cx="75"   cy="875"  r="3"   fill="#34d399" fill-opacity="0.55"/>
+    <circle cx="215"  cy="1015" r="2"   fill="#10b981" fill-opacity="0.5"/>
+    <circle cx="960"  cy="55"   r="2.5" fill="#a78bfa" fill-opacity="0.5"/>
+    <circle cx="570"  cy="970"  r="2"   fill="#34d399" fill-opacity="0.45"/>
+    <circle cx="1310" cy="1015" r="2"   fill="#60a5fa" fill-opacity="0.45"/>
+    <circle cx="1690" cy="450"  r="2"   fill="#a78bfa" fill-opacity="0.4"/>
+  </g>
+
+  <rect width="1920" height="1080" fill="url(#vignette)"/>
+</svg>
