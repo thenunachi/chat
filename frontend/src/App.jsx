@@ -65,7 +65,6 @@ export default function App() {
   const [dmPartner, setDmPartner] = useState(null);
   const [input, setInput] = useState("");
   const [connected, setConnected] = useState(false);
-  const [aiStreaming, setAiStreaming] = useState(false);
   const [showEmoji, setShowEmoji] = useState(false);
   const [showGif, setShowGif] = useState(false);
   const [dragging, setDragging] = useState(false);
@@ -75,7 +74,6 @@ export default function App() {
 
   const wsRef = useRef(null);
   const bottomRef = useRef(null);
-  const aiBufferRef = useRef("");
   const myName = useRef("");
   const pickerRef = useRef(null);
   const fileInputRef = useRef(null);
@@ -178,30 +176,6 @@ export default function App() {
           },
         ]);
         if (!isMine) playMessage();
-      } else if (data.type === "ai_start") {
-        aiBufferRef.current = "";
-        setAiStreaming(true);
-        setMessages((prev) => [
-          ...prev,
-          { type: "ai", text: "", id: "ai-streaming", streaming: true },
-        ]);
-      } else if (data.type === "ai_chunk") {
-        aiBufferRef.current += data.chunk;
-        setMessages((prev) =>
-          prev.map((m) =>
-            m.id === "ai-streaming" ? { ...m, text: aiBufferRef.current } : m
-          )
-        );
-      } else if (data.type === "ai_done") {
-        setAiStreaming(false);
-        setMessages((prev) =>
-          prev.map((m) =>
-            m.id === "ai-streaming"
-              ? { ...m, text: aiBufferRef.current, streaming: false, id: Date.now() + Math.random() }
-              : m
-          )
-        );
-        aiBufferRef.current = "";
       } else if (data.type === "dm") {
         const partner = data.from === myName.current ? data.to : data.from;
         const isMine = data.from === myName.current;
@@ -242,14 +216,6 @@ export default function App() {
     setShowEmoji(false);
     setShowGif(false);
     playSent();
-  }
-
-  function askAI() {
-    const text = input.trim();
-    if (!text || view !== "group") return;
-    wsSend({ type: "ask_ai", text });
-    setInput("");
-    setShowEmoji(false);
   }
 
   async function handleImageFile(file) {
@@ -357,22 +323,6 @@ export default function App() {
     if (msg.type === "system") {
       return (
         <div key={msg.id || i} className="system-msg">{msg.text}</div>
-      );
-    }
-    if (msg.type === "ai") {
-      return (
-        <div key={msg.id || i} className={`ai-bubble${msg.streaming && !msg.text ? " typing" : ""}`}>
-          <span className="ai-label">AI</span>
-          {msg.streaming && !msg.text ? (
-            <span className="typing-dots">
-              <span className="anim-dot1" />
-              <span className="anim-dot2" />
-              <span className="anim-dot3" />
-            </span>
-          ) : (
-            <span>{msg.text}</span>
-          )}
-        </div>
       );
     }
     const isMe = msg.isMine;
@@ -643,17 +593,6 @@ export default function App() {
                 }
               }}
             />
-
-            {view === "group" && (
-              <button
-                className="icon-btn ask-btn"
-                title="Ask AI"
-                onClick={askAI}
-                disabled={aiStreaming || !input.trim()}
-              >
-                AI
-              </button>
-            )}
 
             <button
               className={`icon-btn mic-btn${recording ? " recording" : ""}`}

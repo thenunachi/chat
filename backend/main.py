@@ -1,7 +1,6 @@
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, File, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
-from groq import Groq
 import os
 import json
 import shutil
@@ -25,8 +24,6 @@ app.add_middleware(
 
 UPLOAD_DIR = Path("uploads")
 UPLOAD_DIR.mkdir(exist_ok=True)
-
-client = Groq(api_key=os.getenv("GROQ_API_KEY", ""))
 
 
 @app.post("/upload")
@@ -146,45 +143,6 @@ async def websocket_endpoint(websocket: WebSocket, username: str):
                 "msgType": msg_type,
                 "users": manager.users(),
             })
-
-            if msg_type != "text":
-                continue
-
-            if text.lower().startswith("/ask"):
-                question = text[4:].strip()
-                if not question:
-                    await manager.send_to(username, {
-                        "type": "system",
-                        "content": "Usage: /ask <your question>",
-                        "users": manager.users(),
-                    })
-                    continue
-
-                if not os.getenv("GROQ_API_KEY"):
-                    await manager.broadcast({
-                        "type": "ai_done",
-                        "content": "GROQ_API_KEY is not set.",
-                        "users": manager.users(),
-                    })
-                    continue
-
-                await manager.broadcast({"type": "ai_start", "content": "", "users": manager.users()})
-
-                stream = client.chat.completions.create(
-                    model="llama-3.3-70b-versatile",
-                    messages=[
-                        {"role": "system", "content": "You are a helpful assistant in a group chat. Be clear and concise."},
-                        {"role": "user", "content": question},
-                    ],
-                    stream=True,
-                )
-
-                for chunk in stream:
-                    delta = chunk.choices[0].delta.content or ""
-                    if delta:
-                        await manager.broadcast({"type": "ai_chunk", "content": delta, "users": manager.users()})
-
-                await manager.broadcast({"type": "ai_done", "content": "", "users": manager.users()})
 
     except WebSocketDisconnect:
         manager.disconnect(username)
